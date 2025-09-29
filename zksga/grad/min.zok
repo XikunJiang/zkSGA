@@ -1,0 +1,7 @@
+def min<N>(u32[N] a) -> u32 {
+    u32 mut min = 0;
+    for u32 i in 0..N {
+        min = if a[i] < a[min] {i} else {min};
+    }
+    return a[min];
+}

@@ -1,0 +1,8 @@
+def relu(u32 x) -> u32 {
+    u32 y = if x >= 2147483648 {
+        1
+    } else {
+        x + 1
+    };
+    return y;
+}

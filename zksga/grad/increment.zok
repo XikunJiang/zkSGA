@@ -1,0 +1,36 @@
+def increment(u32[201] temp_states, u32[201] temp_actions, u32 temp_pointer, u32[3][2] theta, u32 qu, u32[3] prob) -> u32[3][2] {
+    u32[3][2] mut inc;
+    u32 mut big_G = qu;
+    for u32 j in 0..200 {
+        big_G = if j <= temp_pointer {
+            big_G * 99 / 100;
+        } else {
+            big_G;
+        };
+    }
+    for u32 i in 0..200 {
+        inc[temp_states[i]][0] = if i <= temp_pointer {
+            if temp_actions[i] == 0 {
+                inc[temp_states[i]][0] + big_G*(qu - prob[temp_states[i]])/10;
+            } else {
+                inc[temp_states[i]][0] - big_G*prob[temp_states[i]]/10;
+            }
+        } else {
+            inc[temp_states[i]][0];
+        };
+        inc[temp_states[i]][1] = if i <= temp_pointer {
+            if temp_actions[i] == 0 {
+                inc[temp_states[i]][1] - big_G*(qu - prob[temp_states[i]])/10;
+            } else {
+                inc[temp_states[i]][1] + big_G*prob[temp_states[i]]/10;
+            }
+        } else {
+            inc[temp_states[i]][1];
+        };
+    }
+    for u32 k in 0..3 {
+        for u32 l in 0..2 {
+            theta[k][l] = theta[k][l] + inc[k][l];
+        }
+    }
+}
